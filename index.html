@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#081622" />
+  <meta name="description" content="Ego视角下手部与机械手共同完成康复任务的交互策略研究演示" />
+  <title>Ego 协作策略研究框架</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar" aria-label="站点导航">
+    <a class="brand" href="#overview" aria-label="返回顶部">
+      <span class="brand-mark" aria-hidden="true"><i></i><i></i></span>
+      <span>EGO·CO LAB</span>
+    </a>
+    <nav>
+      <a href="#framework">研究框架</a>
+      <a href="#validation">验证方案</a>
+    </nav>
+    <span class="private-badge"><span></span>PRIVATE RESEARCH DEMO</span>
+  </header>
+
+  <main>
+    <section class="hero section" id="overview">
+      <div class="eyebrow">HUMAN–ROBOT COLLABORATION · RESEARCH MVP</div>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <h1>Ego 视角下<br><em>手部 × 机械手</em><br>协作策略研究</h1>
+          <p class="lead">从第一人称视觉中理解人的动作意图，将健侧手、患侧外骨骼与机械臂状态对齐到同一任务空间，生成安全、可解释的康复协作动作。</p>
+          <div class="hero-actions">
+            <a class="primary-btn" href="#framework">进入研究框架 <span>↘</span></a>
+            <div class="research-question">
+              <span>核心科学问题</span>
+              <strong>如何让机器在“看懂人”之后，安全地“配合人”？</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="system-window" aria-label="多模态系统状态示意">
+          <div class="window-head">
+            <span>LIVE · REHAB_SCENE_01</span>
+            <div class="window-controls"><i></i><i></i><i></i></div>
+          </div>
+          <div class="scene-view">
+            <div class="camera-frame"><span>ego_cam · 30 fps</span></div>
+            <div class="human-arm" aria-hidden="true">
+              <div class="shoulder"></div><div class="upper-arm"></div><div class="elbow"></div><div class="forearm"></div><div class="hand"></div>
+            </div>
+            <div class="robot-arm" aria-hidden="true">
+              <div class="robot-base"></div><div class="robot-seg one"></div><div class="robot-joint"></div><div class="robot-seg two"></div><div class="robot-grip"></div>
+            </div>
+            <div class="target-ring" aria-hidden="true"><span></span></div>
+            <div class="track-line l1"></div><div class="track-line l2"></div>
+            <span class="scene-tag hand-tag">健侧手 · H</span>
+            <span class="scene-tag robot-tag">机械手 · R</span>
+            <span class="scene-tag goal-tag">目标轨迹 · G</span>
+          </div>
+          <div class="telemetry">
+            <div><span>视觉置信度</span><strong>0.92</strong><i style="--value:92%"></i></div>
+            <div><span>意图：抬臂</span><strong>ACTIVE</strong><i style="--value:76%"></i></div>
+            <div><span>交互力 / N</span><strong>4.8</strong><i style="--value:48%"></i></div>
+            <div><span>安全状态</span><strong class="safe">SAFE</strong><i style="--value:100%"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="signal-strip" aria-label="研究系统主要信号">
+        <span>RGB<sub>ego / desk / wrist</sub></span>
+        <b>+</b><span>STATE<sub>q · q̇ · F · ROM</sub></span>
+        <b>+</b><span>LANGUAGE<sub>任务指令</sub></span>
+        <b>→</b><span class="accent">POLICY<sub>协作动作 + 康复参数</sub></span>
+      </div>
+    </section>
+
+    <section class="framework section" id="framework">
+      <div class="section-head">
+        <div>
+          <span class="section-index">01 / RESEARCH PIPELINE</span>
+          <h2>从“看见”到“协作”的闭环</h2>
+        </div>
+        <p>点击模块，查看该环节的研究定义。六个模块共同回答感知、理解、决策与安全执行如何形成一个可训练、可验证的策略闭环。</p>
+      </div>
+
+      <div class="pipeline" role="tablist" aria-label="研究模块">
+        <button class="module active" role="tab" aria-selected="true" data-key="ego">
+          <span class="module-no">01</span><span class="module-icon">◉</span><strong>Ego 视觉输入</strong><small>多视角时序感知</small>
+        </button>
+        <span class="connector" aria-hidden="true">→</span>
+        <button class="module" role="tab" aria-selected="false" data-key="state">
+          <span class="module-no">02</span><span class="module-icon">⌁</span><strong>人机状态</strong><small>本体与交互感知</small>
+        </button>
+        <span class="connector" aria-hidden="true">→</span>
+        <button class="module" role="tab" aria-selected="false" data-key="align">
+          <span class="module-no">03</span><span class="module-icon">⌖</span><strong>跨视角对齐</strong><small>语义—几何统一</small>
+        </button>
+        <span class="connector" aria-hidden="true">→</span>
+        <button class="module" role="tab" aria-selected="false" data-key="intent">
+          <span class="module-no">04</span><span class="module-icon">◎</span><strong>意图理解</strong><small>目标与阶段推断</small>
+        </button>
+        <span class="connector" aria-hidden="true">→</span>
+        <button class="module" role="tab" aria-selected="false" data-key="policy">
+          <span class="module-no">05</span><span class="module-icon">⋈</span><strong>协作策略</strong><small>角色与动作生成</small>
+        </button>
+        <span class="connector" aria-hidden="true">→</span>
+        <button class="module" role="tab" aria-selected="false" data-key="action">
+          <span class="module-no">06</span><span class="module-icon">↗</span><strong>动作输出</strong><small>执行与安全反馈</small>
+        </button>
+      </div>
+
+      <article class="module-detail" id="module-detail" aria-live="polite">
+        <div class="detail-title">
+          <span id="detail-number">MODULE 01</span>
+          <h3 id="detail-name">Ego 视觉输入</h3>
+          <p id="detail-summary">从佩戴者第一人称视角持续捕获“我在看什么、手在做什么、机械手在哪里”。</p>
+        </div>
+        <div class="detail-grid">
+          <div><span>核心问题</span><p id="detail-question"></p></div>
+          <div><span>可能方法</span><p id="detail-method"></p></div>
+          <div><span>输入 → 输出</span><p id="detail-io"></p></div>
+          <div class="innovation"><span>潜在创新点</span><p id="detail-innovation"></p></div>
+        </div>
+      </article>
+
+      <div class="loop-note">
+        <span class="loop-icon">↺</span>
+        <div><strong>闭环不是终点，而是下一帧的起点</strong><p>动作结果与交互力重新进入状态估计，持续修正意图与协作策略。</p></div>
+        <span class="loop-code">π(a<sub>t</sub> | o<sub>≤t</sub>, s<sub>t</sub>, g)</span>
+      </div>
+    </section>
+
+    <section class="validation section" id="validation">
+      <div class="section-head compact">
+        <div>
+          <span class="section-index">02 / VALIDATION SCENARIO</span>
+          <h2>把框架落到一次抬臂训练</h2>
+        </div>
+        <div class="scenario-switch" role="group" aria-label="演示场景">
+          <button class="active" data-scenario="rehab">康复协作</button>
+          <button data-scenario="adl">辅助生活 · 扩展</button>
+        </div>
+      </div>
+
+      <div class="validation-grid">
+        <div class="scenario-card">
+          <div class="card-label"><span>DEMO TASK</span><b id="scenario-code">R-01</b></div>
+          <h3 id="scenario-title">健侧示范 + 患侧辅助抬臂</h3>
+          <p id="scenario-desc">健侧手发起并示范目标动作，系统理解训练意图；机械臂/外骨骼为患侧提供随阶段变化的辅助力与轨迹约束。</p>
+          <div class="phase-list" id="phase-list">
+            <div class="active"><span>01</span><p><strong>观察</strong><small>Ego 捕捉健侧动作与目标方向</small></p></div>
+            <div><span>02</span><p><strong>理解</strong><small>识别抬臂意图、幅度与动作阶段</small></p></div>
+            <div><span>03</span><p><strong>协作</strong><small>生成患侧辅助轨迹与阻抗参数</small></p></div>
+            <div><span>04</span><p><strong>纠偏</strong><small>依据 ROM 与交互力实时安全修正</small></p></div>
+          </div>
+        </div>
+
+        <div class="evidence-card">
+          <div class="card-label"><span>MINIMUM EVIDENCE</span><b>导师讨论版</b></div>
+          <h3>首版要验证什么？</h3>
+          <div class="metric-grid">
+            <div><strong>≥ 90%</strong><span>意图识别准确率</span><small>任务 / 阶段 / 目标</small></div>
+            <div><strong>≤ 3 cm</strong><span>端—目标误差</span><small>跨视角空间对齐</small></div>
+            <div><strong>0 越界</strong><span>安全约束违规</span><small>ROM / 力 / 速度</small></div>
+            <div><strong>Δt ↓</strong><span>协作完成时间</span><small>相较单方执行</small></div>
+          </div>
+          <div class="safety-bar">
+            <div><span>感知不确定性</span><span>置信度阈值</span><span>动作限幅</span><span>急停 / 接管</span></div>
+            <p><b>安全层</b>独立于生成策略，任何时刻拥有动作否决权。</p>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p><span>一句话研究主张</span>让 Ego 视觉不只“识别动作”，而是成为连接人的意图、身体能力与机器人协作行为的在线接口。</p>
+        <a href="#overview">回到总览 ↑</a>
+      </footer>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
